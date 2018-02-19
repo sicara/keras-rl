@@ -162,6 +162,7 @@ class Agent(object):
                     action = self.processor.process_action(action)
                 reward = 0.
                 accumulated_info = {}
+                info = None
                 done = False
                 for _ in range(action_repetition):
                     callbacks.on_action_begin(action)
@@ -191,7 +192,8 @@ class Agent(object):
                     'reward': reward,
                     'metrics': metrics,
                     'episode': episode,
-                    'info': accumulated_info,
+                    'accumulated_info': accumulated_info,
+                    'info': info,
                 }
                 callbacks.on_step_end(episode_step, step_logs)
                 episode_step += 1
@@ -309,6 +311,7 @@ class Agent(object):
                     action = self.processor.process_action(action)
                 reward = 0.
                 accumulated_info = {}
+                info = None
                 for _ in range(action_repetition):
                     callbacks.on_action_begin(action)
                     observation, r, d, info = env.step(action)
@@ -336,7 +339,8 @@ class Agent(object):
                     'observation': observation,
                     'reward': reward,
                     'episode': episode,
-                    'info': accumulated_info,
+                    'accumulated_info': accumulated_info,
+                    'info': info,
                 }
                 callbacks.on_step_end(episode_step, step_logs)
                 episode_step += 1
